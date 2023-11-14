@@ -23,6 +23,41 @@ const resolvers = {
 		reviews(parent) {
 			return db.reviews.filter(review => review.game_id === parent.id)
 		}
+	},
+	Mutation: {
+		addGame(_, args) {
+			const newGame = {
+				...args.game,
+				id: String(db.games.length + 1),
+			}
+			db.games.push(newGame)
+			return newGame
+		},
+		addReview(_, args) {
+			const newReview = {
+				id: String(db.reviews.length + 1),
+				rating: args.rating,
+				content: args.content,
+				author_id: args.author_id,
+				game_id: args.game_id,
+			}
+			db.reviews.push(newReview)
+			return newReview
+		},
+		addAuthor(_, args) {
+			const newAuthor = {
+				id: String(db.authors.length + 1),
+				name: args.name,
+				verified: args.verified,
+			}
+			db.authors.push(newAuthor)
+			return newAuthor
+		},
+		deleteGame(_, args) {
+			const game = db.games.find(game => game.id === args.id)
+			db.games = db.games.filter(game => game.id !== args.id)
+			return game
+		}
 	}
 }
 

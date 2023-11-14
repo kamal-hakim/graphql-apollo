@@ -29,4 +29,16 @@ export const typeDefs = `#graphql
         authors: [Author!]!
         author(id: ID!): Author!
     }
+
+    type Mutation {
+        addGame(game: GameInput): Game
+        addReview(rating: Int!, content: String!, author_id: ID!, game_id: ID!): Review
+        addAuthor(name: String!, verified: Boolean!): Author
+        deleteGame(id: ID!): Game
+    }
+    
+    input GameInput {
+        title: String!
+        platform: [String!]!
+    }
 `
