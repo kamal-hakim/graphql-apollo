@@ -33,6 +33,20 @@ const resolvers = {
 			db.games.push(newGame)
 			return newGame
 		},
+		updateGame(_, args) {
+			const game = db.games.find(game => game.id === args.id)
+			const updatedGame = {
+				...game,
+				...args.edits,
+			}
+			db.games = db.games.map(game => {
+				if (game.id === args.id) {
+					return updatedGame
+				}
+				return game
+			})
+			return updatedGame
+		},
 		addReview(_, args) {
 			const newReview = {
 				id: String(db.reviews.length + 1),
